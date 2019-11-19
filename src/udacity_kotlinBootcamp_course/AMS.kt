@@ -7,6 +7,20 @@ fun main(args: Array<String>) {
 
     dayOfWeek()
     expressionPractice()
+
+    feedTheFish()
+}
+
+fun feedTheFish() {
+    val day = randomDay()
+    val food = "Pellets"
+
+    println("Today is $day and the food eats $food")
+}
+
+fun randomDay(): String {
+    val weeksDays = listOf<String>("Sunday", "Monday", "Tuesday", "Wednesday", "Thurs", "Fri", "Sat")
+    return weeksDays[Random().nextInt(7)]
 }
 
 fun expressionPractice() {
@@ -14,7 +28,7 @@ fun expressionPractice() {
     println(isUnit)
 
     var temp = 51
-    val message = "You are ${ if ( temp > 20) "hot" else "safe" } fish"
+    val message = "You are ${if (temp > 20) "hot" else "safe"} fish"
     println(message)
 }
 
