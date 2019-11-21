@@ -1,6 +1,7 @@
 package udacity_kotlinBootcamp_course
 
 import java.util.*
+import kotlin.system.measureNanoTime
 
 fun main(args: Array<String>) {
     println("Hello from Kotlin main with args: ${args[0]}")
@@ -18,6 +19,8 @@ fun main(args: Array<String>) {
     println(canAddFish(8.0, listOf(2, 2, 2), hasDecorations = false))
     println(canAddFish(9.0, listOf(1, 1, 3), 3))
     println(canAddFish(10.0, listOf(), 7, true))
+
+    waysToFilterExample()
 }
 
 fun feedTheFish() {
@@ -77,6 +80,19 @@ fun shouldChangeWater(
 
         else -> false
     }
+}
+
+fun waysToFilterExample() {
+    val decorations = listOf<String>("hearts", "chimes", "bells", "toys", "flowerpot")
+
+    // using eager way, where every element is evaluated
+    val eager = measureNanoTime { decorations.map { "$it-mapped" }.filter { it[0] == 'b' } }
+    println("using eager way: $eager")
+
+    // using a sequence is lazy way and is only started after a terminal operation like filter
+    val lazy = measureNanoTime { decorations.asSequence().map { "$it-mapped" }.filter { it[0] == 'b' } }
+    println("using lazy way: $lazy")
+    // println("using lazy way to list: ${lazy.toList()}")
 }
 
 fun swim(time: Int, speed: String = "fast") {
