@@ -1,7 +1,6 @@
 package udacity_kotlinBootcamp_course
 
 import java.util.*
-import java.util.function.Consumer
 
 fun main(args: Array<String>) {
     println("Hello from Kotlin main with args: ${args[0]}")
@@ -29,7 +28,7 @@ fun feedTheFish() {
 
     shouldChangeWater("Monday")
     shouldChangeWater("Monday", 28, 60)
-    shouldChangeWater("Monday", dirty = 50) // if skipping default params, provide param names
+    shouldChangeWater("Sunday", dirty = 50) // if skipping default params, provide param names
 }
 
 fun canAddFish(
@@ -61,12 +60,22 @@ fun fishFood(day: String): String {
     }
 }
 
+fun isTooHot(temperature: Int) = temperature > 20
+fun isDirty(dirty: Int) = dirty > 30
+fun isSunday(day: String) = day == "Sunday"
+
 fun shouldChangeWater(
     day: String,
     temperature: Int = 22,
     dirty: Int = 20
 ): Boolean {
-    return true
+    return when {
+        isTooHot(temperature) -> true
+        isDirty(dirty) -> true
+        isSunday(day) -> true
+
+        else -> false
+    }
 }
 
 fun swim(time: Int, speed: String = "fast") {
