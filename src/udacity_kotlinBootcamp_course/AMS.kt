@@ -32,6 +32,8 @@ fun feedTheFish() {
     shouldChangeWater("Monday")
     shouldChangeWater("Monday", 28, 60)
     shouldChangeWater("Sunday", dirty = 50) // if skipping default params, provide param names
+
+    dirtyProcessor()
 }
 
 fun canAddFish(
@@ -64,6 +66,7 @@ fun fishFood(day: String): String {
 }
 
 fun isTooHot(temperature: Int) = temperature > 20
+val isTooHotLambda = { temperature: Int -> temperature > 20 }
 fun isDirty(dirty: Int) = dirty > 30
 fun isSunday(day: String) = day == "Sunday"
 fun getDirtySensorReading() = 20
@@ -94,6 +97,34 @@ fun waysToFilterExample() {
     println("using lazy way: $lazy")
     // println("using lazy way to list: ${lazy.toList()}")
 }
+
+// following are lambdas and function type examples
+var dirty = 20
+
+val waterFilterLambda: (Int) -> Int = { dirtyLocal -> dirtyLocal / 2 } // lambda
+fun feedFish(dirtyLocal: Int) = dirtyLocal + 10  // function type
+
+// lambdas can be passed as parameters to other functions
+fun updateDirty(dirty: Int, operation: (Int) -> Int): Int {
+    return operation(dirty)
+}
+
+fun dirtyProcessor() {
+    dirty = updateDirty(dirty, waterFilterLambda)
+
+    // since feedFish is a function reference, we use :: to let kotlin know we are only
+    // passing a reference and not trying to execute the function
+    dirty = updateDirty(dirty, ::feedFish)
+
+    // lamdas can directly be created and passed into functions
+    dirty = updateDirty(dirty, { dirty ->
+        dirty + 50
+    })
+
+    // or, the above can be written using last parameter syntax, where lambdas sits outside function's paren
+    dirty = updateDirty(dirty) { dirty -> dirty + 50 }
+}
+////////////////
 
 fun swim(time: Int, speed: String = "fast") {
     println("The swimming speed is $speed for time of $time")
