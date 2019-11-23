@@ -2,11 +2,18 @@ package udacity_kotlinBootcamp_course
 
 import udacity_kotlinBootcamp_course.spice.SpicinessLevel
 
-interface SpiceColor {
-    val color: String
+enum class SpiceColorEnum(val rgb: Int) {
+    RED(0xFF0000),
+    GREEN(0x00FF00),
+    BLUE(0x0000FF),
+    YELLOW(0xFFFF00)
 }
 
-abstract class Spice(
+interface SpiceColor {
+    val color: SpiceColorEnum
+}
+
+sealed class Spice(
     val name: String,
     val spiciness: SpicinessLevel = SpicinessLevel.MILD,
     color: SpiceColor
@@ -35,8 +42,8 @@ interface Grinder {
 }
 
 object YellowSpiceColor : SpiceColor {
-    override val color: String
-        get() = "Yellow"
+    override val color: SpiceColorEnum
+        get() = SpiceColorEnum.YELLOW
 }
 
 class Curry(
@@ -47,11 +54,9 @@ class Curry(
     Spice(name, spiciness, spiceColor),
     Grinder {
     override fun prepareSpice() {
-
     }
 
     override fun grind() {
-
     }
 }
 
