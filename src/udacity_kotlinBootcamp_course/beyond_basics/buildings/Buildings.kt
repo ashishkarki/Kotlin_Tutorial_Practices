@@ -9,7 +9,7 @@ class Brick(numberNeeded: Int = 8) : BaseBuildingMaterial(numberNeeded = numberN
 class Building<out T : BaseBuildingMaterial>(private val baseBuildingMaterial: T) {
     private val baseMaterialsNeeded = 100
 
-    private val actualMaterialsNeeded = baseBuildingMaterial.numberNeeded * baseMaterialsNeeded
+    val actualMaterialsNeeded = baseBuildingMaterial.numberNeeded * baseMaterialsNeeded
 
     fun build() {
         println(
@@ -19,10 +19,17 @@ class Building<out T : BaseBuildingMaterial>(private val baseBuildingMaterial: T
     }
 }
 
+// generic function example
+fun <W : BaseBuildingMaterial> isSmallBuilding(building: Building<W>) {
+    println("kind of building: ${if (building.actualMaterialsNeeded < 500) "small" else "large"}")
+}
+
 fun main() {
     val woodBuilding = Building(Wood())
     woodBuilding.build()
 
     val brickBuilding = Building(Brick())
     brickBuilding.build()
+
+    isSmallBuilding(Building(Wood()))
 }
