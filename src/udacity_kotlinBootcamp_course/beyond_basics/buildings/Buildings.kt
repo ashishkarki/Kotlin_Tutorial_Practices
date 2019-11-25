@@ -1,14 +1,12 @@
 package udacity_kotlinBootcamp_course.beyond_basics.buildings
 
-open class BaseBuildingMaterial(val numberNeeded: Int = 1) {}
+open class BaseBuildingMaterial(val numberNeeded: Int = 1)
 
-class Wood(numberNeeded: Int = 4) :
-    BaseBuildingMaterial(numberNeeded = numberNeeded) {}
+class Wood(numberNeeded: Int = 4) : BaseBuildingMaterial(numberNeeded = numberNeeded)
 
-class Brick(numberNeeded: Int = 8) :
-    BaseBuildingMaterial(numberNeeded = numberNeeded) {}
+class Brick(numberNeeded: Int = 8) : BaseBuildingMaterial(numberNeeded = numberNeeded)
 
-class Building<T : BaseBuildingMaterial>(private val baseBuildingMaterial: T) {
+class Building<out T : BaseBuildingMaterial>(private val baseBuildingMaterial: T) {
     private val baseMaterialsNeeded = 100
 
     private val actualMaterialsNeeded = baseBuildingMaterial.numberNeeded * baseMaterialsNeeded
@@ -22,7 +20,9 @@ class Building<T : BaseBuildingMaterial>(private val baseBuildingMaterial: T) {
 }
 
 fun main() {
-    val woodBuilding = Building<Wood>(Wood())
-
+    val woodBuilding = Building(Wood())
     woodBuilding.build()
+
+    val brickBuilding = Building(Brick())
+    brickBuilding.build()
 }
